@@ -1,22 +1,10 @@
-import {
-  getChannelList as getChannelListApi,
-  type ChannelItem,
-} from "@/api/list";
+
 import "./style.css";
 import { Tabs } from "antd-mobile";
-import { useState } from "react";
+import { useTabs } from "./useTabs";
 
 export default function Home() {
-  const [channelList, setChannelList] = useState<ChannelItem[]>([]);
-
-  useState(() => {
-    async function getChannelList() {
-      const res = await getChannelListApi();
-      console.log();
-      setChannelList(res.data.data.channels);
-    }
-    getChannelList();
-  });
+  const { channelList } = useTabs();
   return (
     <div>
       <div className="tabContainer">
