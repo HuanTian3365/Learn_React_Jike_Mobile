@@ -1,12 +1,26 @@
 import { fetchListAPI, type ListRes } from "@/api/list";
 import { useEffect, useState } from "react";
-import { List, Image } from "antd-mobile";
+import { List, Image, InfiniteScroll } from "antd-mobile";
 
 export default function HomeList({ id }: { id: string }) {
   const [listRes, setListRes] = useState<ListRes>({
     results: [],
     pre_timestamp: "" + new Date().getTime(),
   });
+  const [hasMore, setHasMore] = useState(true);
+
+  async function getList() {
+      fetchListAPI({
+        channel_id: id,
+        timestamp: listRes.pre_timestamp,
+      }).then((res) => {
+        setListRes({
+          results: [...listRes.results, ...res.data.data.results],
+          pre_timestamp: res.data.data.pre_timestamp,
+        });
+        setHasMore(res.data.data.results.length > 0);
+      });;
+  }
 
   useEffect(() => {
     const getList = () => {
@@ -27,17 +41,19 @@ export default function HomeList({ id }: { id: string }) {
         {listRes.results.map((item) => (
           <List.Item
             key={item.art_id}
-            prefix={<Image src={item.cover.images?.[0]} 
-            
-              style={{ width: 40, height: 40 }}
-              fit="cover"
-
-            />}
+            prefix={
+              <Image
+                src={item.cover.images?.[0]}
+                style={{ width: 40, height: 40 }}
+                fit="cover"
+              />
+            }
           >
             {item.title}
           </List.Item>
         ))}
       </List>
+      <InfiniteScroll loadMore={getList} hasMore={hasMore} threshold={10} />
     </div>
   );
 }
