@@ -22,4 +22,5 @@ export default defineConfig({
     },
   },
   plugins: [react()],
+  base: "Learn_React_Jike_Mobile",
 });
