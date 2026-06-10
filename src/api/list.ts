@@ -5,7 +5,7 @@ type ResType<T> = {
   message: string;
 };
 
-type ChannelItem = {
+export  type ChannelItem = {
   id: number;
   name: string;
 };
@@ -17,7 +17,7 @@ type ChannelRes = {
 
 export function getChannelList() {
   return http.request<ResType<ChannelRes>>({
-    url: "/api/channels",
+    url: "/channels",
     method: "GET",
   });
 }

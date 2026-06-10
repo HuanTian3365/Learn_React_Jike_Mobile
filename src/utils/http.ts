@@ -1,7 +1,7 @@
 import axios from "axios";
 
 const requestInstance = axios.create({
-  baseURL: "http://geek.itheima.net/v1_0",
+  baseURL: import.meta.env.VITE_API_BASE_URL,
   timeout: 5000,
 });
 
