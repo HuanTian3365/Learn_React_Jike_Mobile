@@ -11,6 +11,9 @@ const router = createBrowserRouter([
     path: "/detail",
     element: <Detail />,
   },
-]);
+],
+  {
+    basename: "/Learn_React_Jike_Mobile",
+  });
 
 export default router;
